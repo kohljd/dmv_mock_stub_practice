@@ -4,6 +4,10 @@ RSpec.describe VehicleFactory do
   before(:each) do
     @factory = VehicleFactory.new
     dmv_service = DmvDataService.new
+    
+    allow(dmv_service).to receive(:wa_ev_registrations).and_return(wa_ev_reg_test_data)
+    # allow(dmv_service).to receive(:ny_registrations).and_return(ny_test_data)
+    
     @wa_ev_registrations = dmv_service.wa_ev_registrations
     @ny_registrations = dmv_service.ny_registrations
   end
@@ -29,8 +33,8 @@ RSpec.describe VehicleFactory do
     it 'washington vehicles have attributes' do 
       @factory.create_wa_vehicles(@wa_ev_registrations)
 
-      expect(@factory.vehicles[0].vin).to eq('WMEEJ9AA7E')
-      expect(@factory.vehicles[0].year).to eq(2014)
+      expect(@factory.vehicles[0].vin).to eq('KAT1234KAT')
+      expect(@factory.vehicles[0].year).to eq(2022)
       expect(@factory.vehicles[0].make).to eq('SMART')
       expect(@factory.vehicles[0].model).to eq('Fortwo Electric Drive')
     end
@@ -193,5 +197,14 @@ RSpec.describe VehicleFactory do
       :census_tract_2020=>"53067010520",
       :legislative_district=>"22",
       :electric_utility=>"PUGET SOUND ENERGY INC"}]
+  end
+
+  def ny_test_data
+    [{"record_type":"BOAT","vin":"999999999999","registration_class":"BOT","city":"HILTON","state":"NY","zip":"14468","county":"MONROE","model_year":"1975","make":"STARC","body_type":"BOAT","fuel_type":"GAS","reg_valid_date":"2022-08-24T00:00:00.000","reg_expiration_date":"2025-07-31T00:00:00.000","scofflaw_indicator":"N","suspension_indicator":"N","revocation_indicator":"N"},
+    {"record_type":"VEH","vin":"9999236","registration_class":"HIS","city":"ROSLYN","state":"NY","zip":"11576","county":"NASSAU","model_year":"1937","make":"CHRY","body_type":"4DSD","fuel_type":"GAS","unladen_weight":"6300","reg_valid_date":"2023-05-09T00:00:00.000","reg_expiration_date":"2024-06-23T00:00:00.000","color":"BK","scofflaw_indicator":"N","suspension_indicator":"N","revocation_indicator":"N"},
+    {"record_type":"TRL","vin":"9999","registration_class":"LTR","city":"BETHEL PARK","state":"PA","zip":"15102","county":"OUT-OF-STATE","model_year":"1980","make":"CRCF","body_type":"LTRL","fuel_type":"NONE","maximum_gross_weight":"3000","reg_valid_date":"2023-11-15T00:00:00.000","reg_expiration_date":"2024-12-31T00:00:00.000","color":"BR","scofflaw_indicator":"N","suspension_indicator":"N","revocation_indicator":"N"},
+    {"record_type":"BOAT","vin":"999747","registration_class":"BOT","city":"CORTLAND","state":"NY","zip":"13045","county":"CORTLAND","model_year":"1971","make":"STARC","body_type":"BOAT","fuel_type":"GAS","reg_valid_date":"2023-03-08T00:00:00.000","reg_expiration_date":"2026-04-30T00:00:00.000","scofflaw_indicator":"N","suspension_indicator":"N","revocation_indicator":"N"},
+    {"record_type":"BOAT","vin":"999703","registration_class":"BOT","city":"LOCKPORT","state":"NY","zip":"14094","county":"NIAGARA","model_year":"1971","make":"STARC","body_type":"BOAT","fuel_type":"NONE","reg_valid_date":"2023-06-10T00:00:00.000","reg_expiration_date":"2026-05-31T00:00:00.000","scofflaw_indicator":"N","suspension_indicator":"N","revocation_indicator":"N"},
+    {"record_type":"BOAT","vin":"9997R","registration_class":"BOT","city":"LITTLE YORK","state":"NY","zip":"13087","county":"CORTLAND","model_year":"1968","make":"HERTE","body_type":"BOAT","fuel_type":"GAS","reg_valid_date":"2022-05-31T00:00:00.000","reg_expiration_date":"2025-08-31T00:00:00.000","scofflaw_indicator":"N","suspension_indicator":"N","revocation_indicator":"N"}]
   end
 end
